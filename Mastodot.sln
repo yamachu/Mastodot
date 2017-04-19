@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mastodot", "Mastodot\Mastodot.csproj", "{B6E30BEF-2C7E-41A3-AE0A-6CF6B05DDD8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "example", "example\example.csproj", "{593DA5FE-AEB7-4947-A556-931C69444147}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6E30BEF-2C7E-41A3-AE0A-6CF6B05DDD8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E30BEF-2C7E-41A3-AE0A-6CF6B05DDD8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E30BEF-2C7E-41A3-AE0A-6CF6B05DDD8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E30BEF-2C7E-41A3-AE0A-6CF6B05DDD8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{593DA5FE-AEB7-4947-A556-931C69444147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{593DA5FE-AEB7-4947-A556-931C69444147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{593DA5FE-AEB7-4947-A556-931C69444147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{593DA5FE-AEB7-4947-A556-931C69444147}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
