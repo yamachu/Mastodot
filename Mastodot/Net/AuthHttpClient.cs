@@ -79,28 +79,28 @@ namespace Mastodot.Net
             where T : class
         {
             var response = await Get(url);
-            return MastodonJsonConverter.TryParse<T>(response);
+            return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
         public async Task<T> Post<T>(string url, IEnumerable<KeyValuePair<string, string>> body = null)
             where T : class
         {
             var response = await Post(url, body);
-            return MastodonJsonConverter.TryParse<T>(response);
+            return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
         public async Task<T> Patch<T>(string url, IEnumerable<KeyValuePair<string, string>> body = null)
             where T : class
         {
             var response = await Patch(url, body);
-            return MastodonJsonConverter.TryParse<T>(response);
+            return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
         public async Task<T> Delete<T>(string url)
             where T : class
         {
             var response = await Get(url);
-            return MastodonJsonConverter.TryParse<T>(response);
+            return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
 		// http://neue.cc/2013/02/27_398.html
@@ -163,9 +163,9 @@ namespace Mastodot.Net
             switch (ev)
             {
                 case StreamEvent.Update:
-                    return MastodonJsonConverter.TryParse<Status>(entityBody);
+                    return MastodonJsonConverter.TryDeserialize<Status>(entityBody);
                 case StreamEvent.Notification:
-                    return MastodonJsonConverter.TryParse<Notification>(entityBody);
+                    return MastodonJsonConverter.TryDeserialize<Notification>(entityBody);
                 case StreamEvent.Delete:
                     return new DeletedStream
                     {

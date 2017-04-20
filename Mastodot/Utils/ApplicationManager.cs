@@ -35,7 +35,7 @@ namespace Mastodot.Utils
             var response = await client.PostAsync(url, content);
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            var registerdApp = MastodonJsonConverter.TryParse<RegisteredApp>(responseBody);
+            var registerdApp = MastodonJsonConverter.TryDeserialize<RegisteredApp>(responseBody);
             registerdApp.Host = host;
             registerdApp.Scope = scope;
 
@@ -79,7 +79,7 @@ namespace Mastodot.Utils
             var response = await client.PostAsync(url, content);
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            return MastodonJsonConverter.TryParse<TokenInfo>(responseBody);
+            return MastodonJsonConverter.TryDeserialize<TokenInfo>(responseBody);
         }
 
         public static async Task<TokenInfo> GetAccessTokenByCode(RegisteredApp app, string code, string redirectUri = null, string subdomain = null)
@@ -108,7 +108,7 @@ namespace Mastodot.Utils
             var response = await client.PostAsync(url, content);
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            return MastodonJsonConverter.TryParse<TokenInfo>(responseBody);
+            return MastodonJsonConverter.TryDeserialize<TokenInfo>(responseBody);
         }
     }
 }
