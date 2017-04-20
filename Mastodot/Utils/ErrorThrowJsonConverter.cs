@@ -14,6 +14,11 @@ namespace Mastodot
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (objectType.Name.StartsWith("IEnumerable")) {
+                JArray jArray = JArray.Load(reader);
+                return jArray.ToObject<T>();
+            }
+
             JObject jObject = JObject.Load(reader);
             if (jObject["error"] != null)
             {

@@ -10,7 +10,7 @@ namespace Mastodot.Utils
         public static T TryDeserialize<T>(string body)
         {
             var deserialized = JsonConvert.DeserializeObject<T>(body, new ErrorThrowJsonConverter<T>());
-            if (deserialized is Entities.IBaseMastodonEntity) {
+            if (deserialized is IBaseMastodonEntity) {
                 ((IBaseMastodonEntity)deserialized).RawJson = body;
             }
             return deserialized;

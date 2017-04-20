@@ -42,10 +42,10 @@ namespace Mastodot.Entities
         public int FavouritesCount { get; set; }
 
         [JsonProperty("reblogged")]
-        public bool Reblogged { get; set; }
+        public bool? Reblogged { get; set; }
 
         [JsonProperty("favourited")]
-        public bool Favourited { get; set; }
+        public bool? Favourited { get; set; }
 
         [JsonProperty("sensitive")]
         public bool? Sensitive { get; set; }
