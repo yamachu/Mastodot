@@ -26,6 +26,11 @@ namespace Mastodot
             return new AuthHttpClient(AccessToken, host ?? Host);
         }
 
+        private string FullUrl(string path, string query)
+        {
+            return $"{path}{(string.IsNullOrWhiteSpace(query) ? "&" + query : "")}";
+        }
+
         public Task<Account> GetAccount(int id)
         {
             return GetClient().Get<Account>(string.Format(ApiMethods.GetAccount, id));
@@ -36,9 +41,13 @@ namespace Mastodot
             return GetClient().Get<Account>(ApiMethods.GetCurrentAccount);
         }
 
-        public Task<Account> UpdateCurrentAccount(string displayName = null, string note = null, string avatar = null, string header = null)
+        public Task<Account> UpdateCurrentAccount(string displayName = null
+                                                  , string note = null
+                                                  , string avatar = null
+                                                  , string header = null)
         {
-            var body = new Dictionary<string, string>{
+            var body = new Dictionary<string, string>
+            {
                 {"display_name", displayName},
                 {"note", note},
                 {"avatar", avatar},
@@ -48,26 +57,38 @@ namespace Mastodot
             return GetClient().Patch<Account>(ApiMethods.UpdateCurrentAccount, body);
         }
 
-        public Task<IEnumerable<Account>> GetFollowers(int id)
+        public Task<IEnumerable<Account>> GetFollowers(int id
+                                                       , int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(string.Format(ApiMethods.GetFollowers, id));
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetFollowers, id), query));
         }
 
-        public Task<IEnumerable<Account>> GetFollowing(int id)
+        public Task<IEnumerable<Account>> GetFollowing(int id
+                                                       , int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(string.Format(ApiMethods.GetFollowing, id));
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetFollowing, id), query));
         }
 
-        public Task<IEnumerable<Status>> GetStatuses(int id, bool? onlyMedia = null, bool? excludeReplies = null)
+        public Task<IEnumerable<Status>> GetStatuses(int id
+                                                     , bool? onlyMedia = default(bool?), bool? excludeReplies = default(bool?)
+                                                     , int? maxId = default(int?), int? sinceId = default(int?))
         {
-            var query = new Dictionary<string, object>{
+            var query = new Dictionary<string, object>
+            {
                 {"only_media", onlyMedia},
                 {"exclude_replies", excludeReplies}
-            }.Where(x => x.Value != null)
-             .Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y) => $"{x}&{y}");
+            }.AddRangeParameter(maxId, sinceId)
+             .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(string.Format(ApiMethods.GetStatuses, id, query.Length != 0 ? $"&{query}" : ""));
+            return GetClient().Get<IEnumerable<Status>>(FullUrl(string.Format(ApiMethods.GetStatuses, id), query));
         }
 
         public Task<Relationship> Follow(int id)
@@ -100,42 +121,57 @@ namespace Mastodot
             return GetClient().Post<Relationship>(string.Format(ApiMethods.Unmute));
         }
 
-        public Task<IEnumerable<Relationship>> GetRelationships(IEnumerable<int> ids)
+        public Task<IEnumerable<Relationship>> GetRelationships(IEnumerable<int> ids
+                                                               , int? maxId = default(int?), int? sinceId = default(int?))
         {
             var query = new Dictionary<string, object>
             {
                 {"id", ids}
-            }.Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y) => $"{x}&{y}");
+            }.AddRangeParameter(maxId, sinceId)
+             .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Relationship>>($"{ApiMethods.GetRelationships}{(query.Length != 0 ? "?" + query : "")}");
+            return GetClient().Get<IEnumerable<Relationship>>(FullUrl(ApiMethods.GetRelationships, query));
         }
 
-        public Task<IEnumerable<Account>> SearchAccount(string searchQuery, int limit = 40)
+        public Task<IEnumerable<Account>> SearchAccount(string searchQuery
+                                                        , int limit = 40
+                                                        , int? maxId = default(int?), int? sinceId = default(int?))
         {
             var query = new Dictionary<string, object>
             {
                 {"q", searchQuery},
                 {"limit", limit}
-            }.Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y) => $"{x}&{y}");
+            }.AddRangeParameter(maxId, sinceId)
+             .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>($"{ApiMethods.SearchForAccounts}{(query.Length != 0 ? "?" + query : "")}");
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.SearchForAccounts, query));
         }
 
-        public Task<IEnumerable<Account>> GetBlockedUsers()
+        public Task<IEnumerable<Account>> GetBlockedUsers(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(ApiMethods.GetBlocks);
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.GetBlocks, query));
         }
 
-        public Task<IEnumerable<Status>> GetFavourites()
+        public Task<IEnumerable<Status>> GetFavourites(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Status>>(ApiMethods.GetFavourites);
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetFavourites, query));
         }
 
-        public Task<IEnumerable<Account>> GetFollowRequests()
+        public Task<IEnumerable<Account>> GetFollowRequests(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(ApiMethods.GetFollowRequests);
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.GetFollowRequests, query));
         }
 
         public Task AuthorizeFollowRequest(int id)
@@ -184,14 +220,22 @@ namespace Mastodot
             return GetClient().Post<Attachment>(ApiMethods.UploadMedia, param);
         }
 
-        public Task<IEnumerable<Account>> GetMutes()
+        public Task<IEnumerable<Account>> GetMutes(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(ApiMethods.GetMutes);
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.GetMutes, query));
         }
 
-        public Task<IEnumerable<Notification>> GetNotifications()
+        public Task<IEnumerable<Notification>> GetNotifications(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Notification>>(ApiMethods.GetNotifications);
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Notification>>(FullUrl(ApiMethods.GetNotifications, query));
         }
 
         public Task<Notification> GetSingleNotifications()
@@ -204,9 +248,13 @@ namespace Mastodot
             return GetClient().Post(ApiMethods.ClearNotifications);
         }
 
-        public Task<IEnumerable<Report>> GetReports()
+        public Task<IEnumerable<Report>> GetReports(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Report>>(ApiMethods.GetReports);
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().Get<IEnumerable<Report>>(FullUrl(ApiMethods.GetReports, query));
         }
 
         public Task<Report> ReportUser(int accountId, IEnumerable<int> statusIds, string comment)
@@ -227,10 +275,9 @@ namespace Mastodot
             {
                 {"q", searchQuery},
                 {"resolve", searchGlobal},
-            }.Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y) => $"{x}&{y}");
+            }.ToQueryString();
 
-            return GetClient().Get<Results>($"{ApiMethods.Search}{(query.Length != 0 ? "?" + query : "")}");
+            return GetClient().Get<Results>(FullUrl(ApiMethods.Search, query));
         }
 
         public Task<Status> GetStatus(int id)
@@ -248,24 +295,34 @@ namespace Mastodot
             return GetClient().Get<Card>(string.Format(ApiMethods.GetStatusCard, id));
         }
 
-        public Task<IEnumerable<Account>> GetStatusRebloggedAccounts(int id)
+        public Task<IEnumerable<Account>> GetStatusRebloggedAccounts(int id
+                                                                    , int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(string.Format(ApiMethods.GetStatusRebloggedBy, id));
+			var query = new Dictionary<string, object>()
+				.AddRangeParameter(maxId, sinceId)
+				.ToQueryString();
+
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetStatusRebloggedBy, id), query));
         }
 
-        public Task<IEnumerable<Account>> GetStatusFavouritedAccounts(int id)
+        public Task<IEnumerable<Account>> GetStatusFavouritedAccounts(int id
+                                                                     , int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Account>>(string.Format(ApiMethods.GetStatusFavouritedBy, id));
+			var query = new Dictionary<string, object>()
+				.AddRangeParameter(maxId, sinceId)
+				.ToQueryString();
+            
+            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetStatusFavouritedBy, id), query));
         }
 
-        public Task<Status> PostNewStatus(string status, int? inReplyToId = null, IEnumerable<int> mediaIds = null, bool? sensitive = null, string spoilerText = null, Enums.Visibility visibility = Enums.Visibility.Public)
+        public Task<Status> PostNewStatus(string status, int? inReplyToId = null, IEnumerable<int> mediaIds = null, bool? sensitive = default(bool?), string spoilerText = null, Enums.Visibility visibility = Enums.Visibility.Public)
         {
             var param = new Dictionary<string, object>
             {
                 {"status", status},
-                {"in_reply_to_id", inReplyToId},
+                {"in_reply_to_id", inReplyToId.HasValue? (object)inReplyToId.Value: null},
                 {"media_ids", mediaIds != null ? (object)JsonConvert.SerializeObject(mediaIds): mediaIds},
-                {"sensitive", sensitive},
+                {"sensitive", sensitive.HasValue? (object)sensitive.Value: null},
                 {"spoiler_text", spoilerText},
                 {"visibility", visibility.ToString().ToLower()}
             }.Where(x => x.Value != null)
@@ -299,32 +356,39 @@ namespace Mastodot
             return GetClient().Post<Status>(string.Format(ApiMethods.UnfavouritingStatus, id));
         }
 
-        public Task<IEnumerable<Status>> GetRecentHomeTimeline()
+        public Task<IEnumerable<Status>> GetRecentHomeTimeline(int? maxId = default(int?), int? sinceId = default(int?))
         {
-            return GetClient().Get<IEnumerable<Status>>(ApiMethods.GetHomeTimeline);
+			var query = new Dictionary<string, object>()
+				.AddRangeParameter(maxId, sinceId)
+				.ToQueryString();
+
+            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetHomeTimeline, query));
         }
 
-        public Task<IEnumerable<Status>> GetRecentPublicTimeline(bool local = true)
+        public Task<IEnumerable<Status>> GetRecentPublicTimeline(bool local = true
+                                                                , int? maxId = default(int?), int? sinceId = default(int?))
         {
             var query = new Dictionary<string, object>
             {
-                {"local", local}
-            }.Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y) => $"{x}&{y}");
+                {"local", local},
+            }.AddRangeParameter(maxId, sinceId)
+             .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>($"{ApiMethods.GetPublicTimeline}?{query}");
+            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetPublicTimeline, query));
         }
 
-        public Task<IEnumerable<Status>> GetRecentHomeTimeline(string hashtag, bool local = true)
+        public Task<IEnumerable<Status>> GetRecentHomeTimeline(string hashtag
+                                                               , bool local = true
+                                                               , int? maxId = default(int?), int? sinceId = default(int?))
         {
             var query = new Dictionary<string, object>
             {
                 {"hashtag", hashtag},
                 {"local", local}
-            }.Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y) => $"{x}&{y}");
+            }.AddRangeParameter(maxId, sinceId)
+             .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>($"{ApiMethods.GetHastagTimeline}?{query}");
+            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetHastagTimeline, query));
         }
 
         public IObservable<IStreamEntity> GetObservableHomeTimeline(string host = null)
@@ -342,20 +406,52 @@ namespace Mastodot
             var query = new Dictionary<string, object>
             {
                 {"tag", hashtag}
-            }.Select(x => x.ToUrlFormattedString())
-             .Aggregate((x, y)=> $"{x}&{y}");
-            
-            return GetClient(host).GetObservable($"{ApiMethods.GetPublicStream}{(query.Length != 0 ? "?" + query: "")}");
+            }.Where(x => !string.IsNullOrWhiteSpace(x.Value.ToString()))
+             .Select(x => x.ToUrlFormattedQueryString())
+             .Aggregate((x, y) => $"{x}&{y}");
+
+            return GetClient(host).GetObservable(FullUrl(ApiMethods.GetPublicStream, query));
         }
     }
 
     internal static class ParameterFormatUtilExtentions
     {
-        public static string ToUrlFormattedString(this KeyValuePair<string, object> kvp)
+        public static string ToUrlFormattedQueryString(this KeyValuePair<string, object> kvp)
         {
-            // ToDo: Encoding and type much some types
-            // Format ids[]=1&ids[]=2 ...
-            return $"{kvp.Key}={kvp.Value}";
+            if (kvp.Value == null)
+            {
+                return "";
+            }
+
+            if (kvp.Value is IEnumerable<int>)
+            {
+                return ((IEnumerable<int>)kvp.Value)
+                    .Select(i => $"{kvp.Key}[]={i}")
+                    .Aggregate((x, y) => $"{x}&{y}");
+            }
+
+            return $"{kvp.Key}={System.Net.WebUtility.UrlEncode(kvp.Value.ToString())}";
+        }
+
+        public static Dictionary<string, object> AddRangeParameter(this Dictionary<string, object> dict, int? maxId, int? sinceId)
+        {
+            if (maxId.HasValue)
+            {
+                dict.Add("max_id", maxId.Value);
+            }
+            if (sinceId.HasValue)
+            {
+                dict.Add("since_id", sinceId.Value);
+            }
+
+            return dict;
+        }
+
+        public static string ToQueryString(this Dictionary<string, object> dict)
+        {
+            return dict.Where(x => x.Value != null)
+                       .Select(x => x.ToUrlFormattedQueryString())
+                       .Aggregate((x, y) => $"{x}&{y}");
         }
     }
 }
