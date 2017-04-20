@@ -10,6 +10,11 @@ namespace Mastodot.Enums
 
     static internal class ScopeExtentions
     {
+        public static string ToString(this Scope scope)
+        {
+            return scope.ToString(false);
+        }
+
         public static string ToString(this Scope scope, bool encoding = false)
         {
             var scopeStr = "";

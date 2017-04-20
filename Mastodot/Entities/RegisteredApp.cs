@@ -18,10 +18,20 @@ namespace Mastodot.Entities
         [JsonProperty("client_secret")]
         public string ClientSecret { get; set; }
 
-        [JsonIgnore]
+        [JsonProperty("host")]
         public string Host { get; set; }
 
-        [JsonIgnore]
+        [JsonProperty("scope")]
         public Scope Scope { get; set; }
+
+        // For dump to file
+        public bool ShouldSerializeHost() {
+            return RegisteredApp.ForceSerializeForDump;
+        }
+        public bool ShouldSerializeScope() {
+            return RegisteredApp.ForceSerializeForDump;
+        }
+        [JsonIgnore]
+        public static bool ForceSerializeForDump { get; set; } = false;
     }
 }

@@ -30,7 +30,7 @@ namespace Mastodot
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            serializer.Serialize(writer, value);
         }
     }
 
@@ -51,7 +51,10 @@ namespace Mastodot
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var date = (DateTime)value;
+            var timeSpan = (date - new DateTime(1970, 1, 1, 0, 0, 0));
+
+            writer.WriteValue((long)timeSpan.TotalSeconds);
         }
     }
 }
