@@ -56,12 +56,15 @@ namespace Mastodot
             return GetClient().Patch<Account>(ApiMethods.UpdateCurrentAccount, body);
         }
 
-        public Task<IEnumerable<Account>> GetFollowers(int id
-                                                       , int? maxId = default(int?), int? sinceId = default(int?))
+		public Task<IEnumerable<Account>> GetFollowers(int id
+                                                       , int? maxId = default(int?), int? sinceId = default(int?)
+                                                       , int limit = 40)
         {
             var query = new Dictionary<string, object>()
-                .AddRangeParameter(maxId, sinceId)
-                .ToQueryString();
+            {
+                {"limit", limit}
+            }.AddRangeParameter(maxId, sinceId)
+             .ToQueryString();
 
             return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetFollowers, id), query));
         }
