@@ -56,7 +56,7 @@ namespace Mastodot.Consts
 
         #region Notifications
         public static readonly string GetNotifications = "/api/v1/notifications";
-        public static readonly string GetSingleNotifications = "/api/v1/notifications/{0}";
+        public static readonly string GetSingleNotification = "/api/v1/notifications/{0}";
         public static readonly string ClearNotifications = "/api/v1/notifications/clear";
         #endregion
 

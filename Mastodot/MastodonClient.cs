@@ -240,9 +240,13 @@ namespace Mastodot
             return GetClient().Get<IEnumerable<Notification>>(FullUrl(ApiMethods.GetNotifications, query));
         }
 
-        public Task<Notification> GetSingleNotifications()
+        /// <summary>
+        /// Getting a single notification
+        /// </summary>
+        /// <returns>The single Notification</returns>
+        public Task<Notification> GetSingleNotification()
         {
-            return GetClient().Get<Notification>(ApiMethods.GetSingleNotifications);
+            return GetClient().Get<Notification>(ApiMethods.GetSingleNotification);
         }
 
         public Task ClearNotifications()
