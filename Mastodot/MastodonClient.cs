@@ -210,14 +210,9 @@ namespace Mastodot
             return GetClient().Get<Instance>(ApiMethods.GetInstance);
         }
 
-        public Task<Attachment> UploadMedia(string encodedFile)
+        public Task<Attachment> UploadMedia(string filePath)
         {
-            var param = new Dictionary<string, object>
-            {
-                {"file", encodedFile}
-            }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
-
-            return GetClient().Post<Attachment>(ApiMethods.UploadMedia, param);
+            return GetClient().PostWithMedia<Attachment>(ApiMethods.UploadMedia, filePath);
         }
 
         public Task<IEnumerable<Account>> GetMutes(int? maxId = default(int?), int? sinceId = default(int?))
@@ -262,9 +257,10 @@ namespace Mastodot
             var param = new Dictionary<string, object>
             {
                 {"accountId", accountId},
-                {"status_ids", JsonConvert.SerializeObject(statusIds)},
                 {"comment", comment}
-            }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
+            }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()))
+            .ToList();
+            param.AddIntArrayParameter("status_ids", statusIds);
 
             return GetClient().Post<Report>(ApiMethods.ReportUser, param);
         }
@@ -321,12 +317,16 @@ namespace Mastodot
             {
                 {"status", status},
                 {"in_reply_to_id", inReplyToId.HasValue? (object)inReplyToId.Value: null},
-                {"media_ids", mediaIds != null ? (object)JsonConvert.SerializeObject(mediaIds): mediaIds},
                 {"sensitive", sensitive.HasValue? (object)sensitive.Value: null},
                 {"spoiler_text", spoilerText},
-                {"visibility", visibility.ToString().ToLower()}
+                {"visibility", visibility.ToString().ToLower()},
             }.Where(x => x.Value != null)
-             .Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
+             .Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()))
+             .ToList();
+
+            if (mediaIds != null) {
+                param.AddIntArrayParameter("media_ids", mediaIds);
+            }
 
             return GetClient().Post<Status>(ApiMethods.PostNewStatus, param);
         }
@@ -431,6 +431,16 @@ namespace Mastodot
             }
 
             return $"{kvp.Key}={System.Net.WebUtility.UrlEncode(kvp.Value.ToString())}";
+        }
+
+        public static ICollection<KeyValuePair<string, string>> AddIntArrayParameter(this ICollection<KeyValuePair<string, string>>  self, string name, IEnumerable<int> arrayParam)
+        {
+            foreach (var item in arrayParam)
+            {
+                self.Add(new KeyValuePair<string, string>( $"{name}[]", item.ToString()));
+            }
+
+            return self;
         }
 
         public static Dictionary<string, object> AddRangeParameter(this Dictionary<string, object> dict, int? maxId, int? sinceId)
