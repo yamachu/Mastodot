@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Mastodot.Net
 {
-    public class AuthHttpClientHandler: DelegatingHandler
+    internal class AuthHttpClientHandler : DelegatingHandler
     {
         private string AccessToken;
 

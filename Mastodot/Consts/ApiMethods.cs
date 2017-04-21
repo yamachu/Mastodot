@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Mastodot.Consts
 {
-    public class ApiMethods
+    internal class ApiMethods
     {
         #region Accounts
         public static readonly string GetAccount = "/api/v1/accounts/{0}";

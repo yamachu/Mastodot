@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Mastodot.Enums
 {
-    public enum StreamEvent
+    internal enum StreamEvent
     {
         Update,
         Notification,

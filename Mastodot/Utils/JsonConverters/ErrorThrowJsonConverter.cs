@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Mastodot
 {
-    public class ErrorThrowJsonConverter<T> : JsonConverter
+    internal class ErrorThrowJsonConverter<T> : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
