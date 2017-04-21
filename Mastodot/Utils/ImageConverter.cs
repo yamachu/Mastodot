@@ -3,7 +3,7 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Mastodot
+namespace Mastodot.Utils
 {
     public class ImageConverter
     {

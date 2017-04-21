@@ -1,7 +1,7 @@
 ﻿using System;
 using Mastodot.Entities;
 
-namespace Mastodot
+namespace Mastodot.Exceptions
 {
     // Will wrapped AggregateExcepton
     public class DeserializeErrorException: Exception

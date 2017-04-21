@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Mastodot.Consts;
 using Mastodot.Entities;
 using Mastodot.Net;
-using Newtonsoft.Json;
 
 namespace Mastodot
 {

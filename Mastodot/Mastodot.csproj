@@ -10,6 +10,8 @@
     <Folder Include="Consts\" />
     <Folder Include="Enums\" />
     <Folder Include="Net\" />
+    <Folder Include="Utils\JsonConverters\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using Mastodot.Utils.JsonConverters;
 using Newtonsoft.Json;
 
 namespace Mastodot.Entities
