@@ -708,7 +708,8 @@ namespace Mastodot
         {
             var query = new Dictionary<string, object>
             {
-                {"tag", hashtag}
+                {"tag", hashtag},
+                {"local", local}
             }.Where(x => !string.IsNullOrWhiteSpace(x.Value.ToString()))
              .Select(x => x.ToUrlFormattedQueryString())
              .Aggregate((x, y) => $"{x}&{y}");
