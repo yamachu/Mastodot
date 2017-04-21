@@ -92,32 +92,32 @@ namespace Mastodot
 
         public Task<Relationship> Follow(int id)
         {
-            return GetClient().Post<Relationship>(string.Format(ApiMethods.Follow));
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.Follow, id));
         }
 
         public Task<Relationship> Unfollow(int id)
         {
-            return GetClient().Post<Relationship>(string.Format(ApiMethods.Unfollow));
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.Unfollow, id));
         }
 
         public Task<Relationship> Block(int id)
         {
-            return GetClient().Post<Relationship>(string.Format(ApiMethods.Block));
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.Block, id));
         }
 
         public Task<Relationship> Unblock(int id)
         {
-            return GetClient().Post<Relationship>(string.Format(ApiMethods.Unblock));
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.Unblock, id));
         }
 
         public Task<Relationship> Mute(int id)
         {
-            return GetClient().Post<Relationship>(string.Format(ApiMethods.Mute));
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.Mute, id));
         }
 
         public Task<Relationship> Unmute(int id)
         {
-            return GetClient().Post<Relationship>(string.Format(ApiMethods.Unmute));
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.Unmute, id));
         }
 
         public Task<IEnumerable<Relationship>> GetRelationships(IEnumerable<int> ids
