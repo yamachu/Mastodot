@@ -25,6 +25,7 @@ namespace Mastodot.Utils.JsonConverters
             if (jObject["error"] != null)
             {
                 Error error = jObject.ToObject<Error>();
+                error.RawJson = jObject.ToString();
                 var exception = new DeserializeErrorException($"Cant deserialize response, Type {objectType}")
                 {
                     Error = error
