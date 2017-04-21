@@ -215,6 +215,11 @@ namespace Mastodot
             return GetClient().PostWithMedia<Attachment>(ApiMethods.UploadMedia, filePath);
         }
 
+        public Task<Attachment> UploadMedia(byte[] image)
+        {
+            return GetClient().PostWithMedia<Attachment>(ApiMethods.UploadMedia, image);
+        }
+
         public Task<IEnumerable<Account>> GetMutes(int? maxId = default(int?), int? sinceId = default(int?))
         {
             var query = new Dictionary<string, object>()

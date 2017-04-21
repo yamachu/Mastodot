@@ -61,6 +61,20 @@ namespace Mastodot.Net
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task<string> PostWithMedia(string url, byte[] image)
+        {
+			var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
+			{
+				BaseAddress = Host
+			};
+
+            var content = new MultipartFormDataContent();
+            content.Add(new ByteArrayContent(image), "file", "file");
+
+			var response = await client.PostAsync(url, content);
+			return await response.Content.ReadAsStringAsync();
+        }
+
         public async Task<string> Patch(string url, IEnumerable<KeyValuePair<string, string>> body = null)
         {
             var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
@@ -107,6 +121,13 @@ namespace Mastodot.Net
             where T : class
         {
             var response = await PostWithMedia(url, fileName);
+            return MastodonJsonConverter.TryDeserialize<T>(response);
+        }
+
+        public async Task<T> PostWithMedia<T>(string url, byte[] image)
+            where T : class
+        {
+            var response = await PostWithMedia(url, image);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
