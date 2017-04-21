@@ -298,9 +298,9 @@ namespace Mastodot
         public Task<IEnumerable<Account>> GetStatusRebloggedAccounts(int id
                                                                     , int? maxId = default(int?), int? sinceId = default(int?))
         {
-			var query = new Dictionary<string, object>()
-				.AddRangeParameter(maxId, sinceId)
-				.ToQueryString();
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
 
             return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetStatusRebloggedBy, id), query));
         }
@@ -308,10 +308,10 @@ namespace Mastodot
         public Task<IEnumerable<Account>> GetStatusFavouritedAccounts(int id
                                                                      , int? maxId = default(int?), int? sinceId = default(int?))
         {
-			var query = new Dictionary<string, object>()
-				.AddRangeParameter(maxId, sinceId)
-				.ToQueryString();
-            
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
             return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetStatusFavouritedBy, id), query));
         }
 
@@ -328,7 +328,8 @@ namespace Mastodot
              .Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()))
              .ToList();
 
-            if (mediaIds != null) {
+            if (mediaIds != null)
+            {
                 param.AddIntArrayParameter("media_ids", mediaIds);
             }
 
@@ -362,9 +363,9 @@ namespace Mastodot
 
         public Task<IEnumerable<Status>> GetRecentHomeTimeline(int? maxId = default(int?), int? sinceId = default(int?))
         {
-			var query = new Dictionary<string, object>()
-				.AddRangeParameter(maxId, sinceId)
-				.ToQueryString();
+            var query = new Dictionary<string, object>()
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
 
             return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetHomeTimeline, query));
         }
@@ -437,11 +438,11 @@ namespace Mastodot
             return $"{kvp.Key}={System.Net.WebUtility.UrlEncode(kvp.Value.ToString())}";
         }
 
-        public static ICollection<KeyValuePair<string, string>> AddIntArrayParameter(this ICollection<KeyValuePair<string, string>>  self, string name, IEnumerable<int> arrayParam)
+        public static ICollection<KeyValuePair<string, string>> AddIntArrayParameter(this ICollection<KeyValuePair<string, string>> self, string name, IEnumerable<int> arrayParam)
         {
             foreach (var item in arrayParam)
             {
-                self.Add(new KeyValuePair<string, string>( $"{name}[]", item.ToString()));
+                self.Add(new KeyValuePair<string, string>($"{name}[]", item.ToString()));
             }
 
             return self;

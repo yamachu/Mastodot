@@ -63,16 +63,16 @@ namespace Mastodot.Net
 
         public async Task<string> PostWithMedia(string url, byte[] image)
         {
-			var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
-			{
-				BaseAddress = Host
-			};
+            var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
+            {
+                BaseAddress = Host
+            };
 
             var content = new MultipartFormDataContent();
             content.Add(new ByteArrayContent(image), "file", "file");
 
-			var response = await client.PostAsync(url, content);
-			return await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content);
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<string> Patch(string url, IEnumerable<KeyValuePair<string, string>> body = null)
@@ -145,8 +145,8 @@ namespace Mastodot.Net
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
-		// http://neue.cc/2013/02/27_398.html
-		public IObservable<IStreamEntity> GetObservable(string url)
+        // http://neue.cc/2013/02/27_398.html
+        public IObservable<IStreamEntity> GetObservable(string url)
         {
             return Observable.Create<IStreamEntity>(async (observer, ct) =>
             {
@@ -158,10 +158,10 @@ namespace Mastodot.Net
 
                 try
                 {
-					var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
-					{
-						BaseAddress = Host
-					};
+                    var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
+                    {
+                        BaseAddress = Host
+                    };
                     client.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
 
                     using (var stream = await client.GetStreamAsync(url))
@@ -171,14 +171,17 @@ namespace Mastodot.Net
                         {
                             var s = await sr.ReadLineAsync();
 
-                            if (string.IsNullOrEmpty(s) || s.StartsWith(":")) {
+                            if (string.IsNullOrEmpty(s) || s.StartsWith(":"))
+                            {
                                 continue;
                             }
 
-                            if (s.StartsWith("event: ")) {
+                            if (s.StartsWith("event: "))
+                            {
                                 eventSubject.OnNext(StreamEventExtentions.FromString(s.Substring("event: ".Length)));
                             }
-                            else if (s.StartsWith("data: ")) {
+                            else if (s.StartsWith("data: "))
+                            {
                                 entityBodySubject.OnNext(s.Substring("data: ".Length));
                             }
                         }
