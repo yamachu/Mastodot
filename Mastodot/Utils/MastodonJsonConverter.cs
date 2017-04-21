@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Mastodot.Utils
 {
-    public class MastodonJsonConverter
+    internal class MastodonJsonConverter
     {
         public static T TryDeserialize<T>(string body)
         {
