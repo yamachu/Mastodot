@@ -7,6 +7,11 @@ namespace Mastodot.Utils
 {
     public class ImageConverter
     {
+        /// <summary>
+        /// Base64Encoded image from byte array.
+        /// </summary>
+        /// <returns>The encoded image string from byte array.</returns>
+        /// <param name="image">byte formated Image.</param>
         public static string Base64EncodedImageFromByteArray(byte[] image)
         {
             var mime = GetMime(image);
@@ -20,6 +25,11 @@ namespace Mastodot.Utils
             return DataURIFormat(mime, Convert.ToBase64String(image));
         }
 
+        /// <summary>
+        /// Base64Encoded image from file.
+        /// </summary>
+        /// <returns>The encoded image string from file.</returns>
+        /// <param name="filePath">File path.</param>
         public static async Task<string> Base64EncodedImageFromFile(string filePath)
         {
             using (var fs = new FileStream(filePath, FileMode.Open))
