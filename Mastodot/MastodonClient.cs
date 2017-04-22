@@ -404,9 +404,9 @@ namespace Mastodot
         /// Getting a single notification
         /// </summary>
         /// <returns>The single Notification</returns>
-        public Task<Notification> GetSingleNotification()
+        public Task<Notification> GetSingleNotification(int id)
         {
-            return GetClient().Get<Notification>(ApiMethods.GetSingleNotification);
+            return GetClient().Get<Notification>(string.Format(ApiMethods.GetSingleNotification, id));
         }
 
         /// <summary>
@@ -663,12 +663,11 @@ namespace Mastodot
         {
             var query = new Dictionary<string, object>
             {
-                {"hashtag", hashtag},
                 {"local", local}
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetHastagTimeline, query));
+            return GetClient().Get<IEnumerable<Status>>(FullUrl(string.Format(ApiMethods.GetHastagTimeline, hashtag) , query));
         }
 
         /// <summary>
