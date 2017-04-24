@@ -34,6 +34,16 @@ namespace Mastodot.Net
             return await response.Content.ReadAsStringAsync();
         }
 
+        private async Task<HttpResponseMessage> GetEntirely(string url)
+        {
+            var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
+            {
+                BaseAddress = Host
+            };
+
+            return await client.GetAsync(url);
+        }
+
         public async Task<string> Post(string url, IEnumerable<KeyValuePair<string, string>> body = null)
         {
             var client = new HttpClient(new AuthHttpClientHandler(AccessToken))
@@ -108,6 +118,26 @@ namespace Mastodot.Net
         {
             var response = await Get(url);
             return MastodonJsonConverter.TryDeserialize<T>(response);
+        }
+
+        public async Task<ResponseCollection<T>> GetCollection<T>(string url)
+            where T : IBaseMastodonEntity
+        {
+            var response = await GetEntirely(url);
+            var content = await response.Content.ReadAsStringAsync();
+
+            var entity = MastodonJsonConverter.TryDeserialize<IEnumerable<T>>(content);
+            var result = new ResponseCollection<T>(entity);
+
+            result.RawJson = content;
+
+            IEnumerable<string> link;
+            if (response.Headers.TryGetValues("Link", out link))
+            {
+                result.Links = LinkHeaderParser.GetHeader(link.First());
+            }
+
+            return result;
         }
 
         public async Task<T> Post<T>(string url, IEnumerable<KeyValuePair<string, string>> body = null)
