@@ -4,6 +4,6 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Mastodot" Version="1.0.1" />
+    <ProjectReference Include="..\Mastodot\Mastodot.csproj" />
   </ItemGroup>
 </Project>
