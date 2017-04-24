@@ -96,7 +96,7 @@ namespace Mastodot
         /// <param name="maxId">Get a list of followers with ID less than or equal this value</param>
         /// <param name="sinceId">Get a list of followers with ID greater than this value</param>
         /// <param name="limit">Maximum number of accounts to get (Default 40, Max 80)</param>
-        public Task<IEnumerable<Account>> GetFollowers(int id
+        public Task<ResponseCollection<Account>> GetFollowers(int id
                                                        , int? maxId = default(int?), int? sinceId = default(int?)
                                                        , int limit = 40)
         {
@@ -106,7 +106,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetFollowers, id), query));
+            return GetClient().GetCollection<Account>(FullUrl(string.Format(ApiMethods.GetFollowers, id), query));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 40, Max 80)</param>
-        public Task<IEnumerable<Account>> GetFollowing(int id
+        public Task<ResponseCollection<Account>> GetFollowing(int id
                                                        , int? maxId = default(int?), int? sinceId = default(int?)
                                                        , int limit = 40)
         {
@@ -127,7 +127,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetFollowing, id), query));
+            return GetClient().GetCollection<Account>(FullUrl(string.Format(ApiMethods.GetFollowing, id), query));
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get(Default 20, Max 40)</param>
-        public Task<IEnumerable<Status>> GetStatuses(int id
+        public Task<ResponseCollection<Status>> GetStatuses(int id
                                                      , bool? onlyMedia = default(bool?), bool? excludeReplies = default(bool?)
                                                      , int? maxId = default(int?), int? sinceId = default(int?)
                                                      , int limit = 20)
@@ -153,7 +153,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(FullUrl(string.Format(ApiMethods.GetStatuses, id), query));
+            return GetClient().GetCollection<Status>(FullUrl(string.Format(ApiMethods.GetStatuses, id), query));
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Mastodot
         /// <param name="limit">Maximum number of matching accounts to return (default: 40)</param>
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
-        public Task<IEnumerable<Account>> SearchAccount(string searchQuery
+        public Task<ResponseCollection<Account>> SearchAccount(string searchQuery
                                                         , int limit = 40
                                                         , int? maxId = default(int?), int? sinceId = default(int?))
         {
@@ -250,7 +250,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.SearchForAccounts, query));
+            return GetClient().GetCollection<Account>(FullUrl(ApiMethods.SearchForAccounts, query));
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 40, Max 80)</param>
-        public Task<IEnumerable<Account>> GetBlockedUsers(int? maxId = default(int?), int? sinceId = default(int?)
+        public Task<ResponseCollection<Account>> GetBlockedUsers(int? maxId = default(int?), int? sinceId = default(int?)
                                                           , int limit = 40)
         {
             var query = new Dictionary<string, object>
@@ -269,7 +269,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.GetBlocks, query));
+            return GetClient().GetCollection<Account>(FullUrl(ApiMethods.GetBlocks, query));
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 20, Max 40)</param>
-        public Task<IEnumerable<Status>> GetFavourites(int? maxId = default(int?), int? sinceId = default(int?)
+        public Task<ResponseCollection<Status>> GetFavourites(int? maxId = default(int?), int? sinceId = default(int?)
                                                        , int limit = 20)
         {
             var query = new Dictionary<string, object>
@@ -288,7 +288,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetFavourites, query));
+            return GetClient().GetCollection<Status>(FullUrl(ApiMethods.GetFavourites, query));
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 40, Max 80)</param>
-        public Task<IEnumerable<Account>> GetFollowRequests(int? maxId = default(int?), int? sinceId = default(int?)
+        public Task<ResponseCollection<Account>> GetFollowRequests(int? maxId = default(int?), int? sinceId = default(int?)
                                                             , int limit = 40)
         {
             var query = new Dictionary<string, object>
@@ -307,7 +307,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.GetFollowRequests, query));
+            return GetClient().GetCollection<Account>(FullUrl(ApiMethods.GetFollowRequests, query));
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 40, Max 80)</param>
-        public Task<IEnumerable<Account>> GetMutes(int? maxId = default(int?), int? sinceId = default(int?)
+        public Task<ResponseCollection<Account>> GetMutes(int? maxId = default(int?), int? sinceId = default(int?)
                                                    , int limit = 40)
         {
             var query = new Dictionary<string, object>
@@ -401,7 +401,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(ApiMethods.GetMutes, query));
+            return GetClient().GetCollection<Account>(FullUrl(ApiMethods.GetMutes, query));
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 15, Max 30)</param>
-        public Task<IEnumerable<Notification>> GetNotifications(int? maxId = default(int?), int? sinceId = default(int?)
+        public Task<ResponseCollection<Notification>> GetNotifications(int? maxId = default(int?), int? sinceId = default(int?)
                                                                 , int limit = 15)
         {
             var query = new Dictionary<string, object>
@@ -420,7 +420,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Notification>>(FullUrl(ApiMethods.GetNotifications, query));
+            return GetClient().GetCollection<Notification>(FullUrl(ApiMethods.GetNotifications, query));
         }
 
         /// <summary>
@@ -528,7 +528,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">Since ID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 40, Max 80)</param>
-        public Task<IEnumerable<Account>> GetStatusRebloggedAccounts(int id
+        public Task<ResponseCollection<Account>> GetStatusRebloggedAccounts(int id
                                                                     , int? maxId = default(int?), int? sinceId = default(int?)
                                                                     , int limit = 40)
         {
@@ -539,7 +539,7 @@ namespace Mastodot
                 .AddRangeParameter(maxId, sinceId)
                 .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetStatusRebloggedBy, id), query));
+            return GetClient().GetCollection<Account>(FullUrl(string.Format(ApiMethods.GetStatusRebloggedBy, id), query));
         }
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace Mastodot
         /// <param name="id">Target AccountID</param>
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
-        public Task<IEnumerable<Account>> GetStatusFavouritedAccounts(int id
+        public Task<ResponseCollection<Account>> GetStatusFavouritedAccounts(int id
                                                                      , int? maxId = default(int?), int? sinceId = default(int?)
                                                                      , int limit = 40)
         {
@@ -560,7 +560,7 @@ namespace Mastodot
                 .AddRangeParameter(maxId, sinceId)
                 .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Account>>(FullUrl(string.Format(ApiMethods.GetStatusFavouritedBy, id), query));
+            return GetClient().GetCollection<Account>(FullUrl(string.Format(ApiMethods.GetStatusFavouritedBy, id), query));
         }
 
         /// <summary>
@@ -651,7 +651,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 20, Max 40)</param>
-        public Task<IEnumerable<Status>> GetRecentHomeTimeline(int? maxId = default(int?), int? sinceId = default(int?)
+        public Task<ResponseCollection<Status>> GetRecentHomeTimeline(int? maxId = default(int?), int? sinceId = default(int?)
                                                                , int limit = 20)
         {
             var query = new Dictionary<string, object>
@@ -660,7 +660,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetHomeTimeline, query));
+            return GetClient().GetCollection<Status>(FullUrl(ApiMethods.GetHomeTimeline, query));
         }
 
         /// <summary>
@@ -671,7 +671,7 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 20, Max 40)</param>
-        public Task<IEnumerable<Status>> GetRecentPublicTimeline(bool local = false
+        public Task<ResponseCollection<Status>> GetRecentPublicTimeline(bool local = false
                                                                 , int? maxId = default(int?), int? sinceId = default(int?)
                                                                 , int limit = 20)
         {
@@ -682,7 +682,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(FullUrl(ApiMethods.GetPublicTimeline, query));
+            return GetClient().GetCollection<Status>(FullUrl(ApiMethods.GetPublicTimeline, query));
         }
 
         /// <summary>
@@ -693,7 +693,7 @@ namespace Mastodot
         /// <param name="local">If set to <c>true</c> show this Host only</param>
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
-        public Task<IEnumerable<Status>> GetRecentHashtagTimeline(string hashtag
+        public Task<ResponseCollection<Status>> GetRecentHashtagTimeline(string hashtag
                                                                , bool local = false
                                                                , int? maxId = default(int?), int? sinceId = default(int?)
                                                                , int limit = 20)
@@ -705,7 +705,7 @@ namespace Mastodot
             }.AddRangeParameter(maxId, sinceId)
              .ToQueryString();
 
-            return GetClient().Get<IEnumerable<Status>>(FullUrl(string.Format(ApiMethods.GetHastagTimeline, hashtag), query));
+            return GetClient().GetCollection<Status>(FullUrl(string.Format(ApiMethods.GetHastagTimeline, hashtag), query));
         }
 
         /// <summary>
