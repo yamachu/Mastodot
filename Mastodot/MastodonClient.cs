@@ -652,7 +652,7 @@ namespace Mastodot
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 20, Max 40)</param>
         public Task<ResponseCollection<Status>> GetRecentHomeTimeline(int? maxId = default(int?), int? sinceId = default(int?)
-                                                               , int limit = 20)
+                                                                      , int limit = 20)
         {
             var query = new Dictionary<string, object>
             {
@@ -671,9 +671,9 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         /// <param name="limit">Maximum number of accounts to get (Default 20, Max 40)</param>
-        public Task<ResponseCollection<Status>> GetRecentPublicTimeline(bool local = false
-                                                                , int? maxId = default(int?), int? sinceId = default(int?)
-                                                                , int limit = 20)
+        public Task<ResponseCollection<Status>> GetRecentPublicTimeline(bool? local = null
+                                                                        , int? maxId = default(int?), int? sinceId = default(int?)
+                                                                        , int limit = 20)
         {
             var query = new Dictionary<string, object>
             {
@@ -694,9 +694,9 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         public Task<ResponseCollection<Status>> GetRecentHashtagTimeline(string hashtag
-                                                               , bool local = false
-                                                               , int? maxId = default(int?), int? sinceId = default(int?)
-                                                               , int limit = 20)
+                                                                         , bool? local = null
+                                                                         , int? maxId = default(int?), int? sinceId = default(int?)
+                                                                         , int limit = 20)
         {
             var query = new Dictionary<string, object>
             {
