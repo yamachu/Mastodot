@@ -41,7 +41,7 @@ namespace Mastodot
 
         private string FullUrl(string path, string query)
         {
-            return $"{path}{(string.IsNullOrWhiteSpace(query) ? "&" + query : "")}";
+            return $"{path}{(!string.IsNullOrWhiteSpace(query) ? "?" + query : "")}";
         }
 
         /// <summary>
@@ -447,10 +447,7 @@ namespace Mastodot
         /// <returns>The Reports that current user made</returns>
         public Task<IEnumerable<Report>> GetReports()
         {
-            var query = new Dictionary<string, object>()
-                .ToQueryString();
-
-            return GetClient().Get<IEnumerable<Report>>(FullUrl(ApiMethods.GetReports, query));
+            return GetClient().Get<IEnumerable<Report>>(ApiMethods.GetReports);
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace Mastodot.Entities
         [JsonProperty("acct")]
         public string FullUserName { get; set; }
 
-        [JsonProperty("diaplay_name")]
+        [JsonProperty("display_name")]
         public string DisplayName { get; set; }
 
         [JsonProperty("locked")]

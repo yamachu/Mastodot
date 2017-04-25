@@ -38,7 +38,7 @@ var tokens = await ApplicationManager.GetAccessTokenByCode(registeredApp, "Code 
 tokens contains AccessToken.
 You can access Mastodon API by using this AccessToken.
 
-#### Using Mastodon API
+### Using Mastodon API
 
 This code is how to Toot.
 
@@ -61,6 +61,89 @@ var publicStream = client.GetObservablePublicTimeline();
                     .Subscribe(x => Console.WriteLine($"{x.Account.FullUserName} Tooted: {x.Content}"));
 
 ```
+
+## MastodonAPIs
+
+### Mastodon APIs
+
+All APIs is ready
+
+Accounts
+- [x]  GET /api/v1/accounts/:id
+- [x]  GET /api/v1/accounts/verify_credentials
+- [x]  PATCH /api/v1/accounts/update_credentials
+- [x]  GET /api/v1/accounts/:id/followers
+- [x]  GET /api/v1/accounts/:id/following
+- [x]  GET /api/v1/accounts/:id/statuses
+- [x]  POST /api/v1/accounts/:id/follow
+- [x]  POST /api/v1/accounts/:id/unfollow
+- [x]  POST /api/v1/accounts/:id/block
+- [x]  POST /api/v1/accounts/:id/unblock
+- [x]  POST /api/v1/accounts/:id/mute
+- [x]  POST /api/v1/accounts/:id/unmute
+- [x]  GET /api/v1/accounts/relationships
+- [x]  GET /api/v1/accounts/search
+
+Apps
+- [x]  POST /api/v1/apps
+
+Blocks
+- [x]  GET /api/v1/blocks
+
+Favourites
+- [x]  GET /api/v1/favourites
+
+Follow Requests
+- [x]  GET /api/v1/follow_requests
+- [x]  POST /api/v1/follow_requests/:id/authorize
+- [x]  POST /api/v1/follow_requests/:id/reject
+
+Follows
+- [x]  POST /api/v1/follows
+
+Instances
+- [x]  GET /api/v1/instance
+
+Media
+- [x]  POST /api/v1/media
+
+Mutes
+- [x]  GET /api/v1/mutes
+
+Notifications
+- [x]  GET /api/v1/notifications
+- [x]  GET /api/v1/notifications/:id
+- [x]  POST /api/v1/notifications/clear
+
+Reports
+- [x]  GET /api/v1/reports
+- [x]  POST /api/v1/reports
+
+Search
+- [x]  GET /api/v1/search
+
+Statuses
+- [x]  GET /api/v1/statuses/:id
+- [x]  GET /api/v1/statuses/:id/context
+- [x]  GET /api/v1/statuses/:id/card
+- [x]  GET /api/v1/statuses/:id/reblogged_by
+- [x]  GET /api/v1/statuses/:id/favourited_by
+- [x]  POST /api/v1/statuses
+- [x]  DELETE /api/v1/statuses/:id
+- [x]  POST /api/v1/statuses/:id/reblog
+- [x]  POST /api/v1/statuses/:id/unreblog
+- [x]  POST /api/v1/statuses/:id/favourite
+- [x]  POST /api/v1/statuses/:id/unfavourite
+
+Timelines
+- [x]  GET /api/v1/timelines/home
+- [x]  GET /api/v1/timelines/public
+- [x]  GET /api/v1/timelines/tag/:hashtag
+
+Streaming
+- [x] GET /api/v1/streaming/user
+- [x] GET /api/v1/streaming/public
+- [x] GET /api/v1/streaming/hashtag
 
 ## License
 
