@@ -63,8 +63,8 @@ namespace Mastodot.Utils
 
         private static int? GetNextId(IDictionary<string, string> header)
         {
-            string id;
-            if (header.TryGetValue(MAXID, out id))
+            string id = "";
+            if (header?.TryGetValue(MAXID, out id) == true)
             {
                 return int.Parse(id);
             }
@@ -74,8 +74,8 @@ namespace Mastodot.Utils
 
         private static int? GetPrevId(IDictionary<string, string> header)
         {
-            string id;
-            if (header.TryGetValue(SINCEID, out id))
+            string id = "";
+            if (header?.TryGetValue(SINCEID, out id) == true)
             {
                 return int.Parse(id);
             }
@@ -84,7 +84,12 @@ namespace Mastodot.Utils
         }
 
         private static IDictionary<string, string> QueryParser(string header)
-        => new string(header.SkipWhile(c => !c.Equals('?')).Skip(1).ToArray())
-            .Split('&').Select(q => q.Split('=')).Where(kvp => kvp.Length == 2).ToDictionary(k => k[0], v => v[1]);
+        {
+            var queryIndex = header.IndexOf('?');
+            if (queryIndex == -1) return null;
+
+            return header.Remove(0, queryIndex + 1)
+                .Split('&').Select(q => q.Split('=')).Where(kvp => kvp.Length == 2).ToDictionary(k => k[0], v => v[1]);
+        }
     }
 }

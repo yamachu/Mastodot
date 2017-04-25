@@ -24,7 +24,7 @@ namespace Mastodot.Utils
 
             return DataURIFormat(mime, Convert.ToBase64String(image));
         }
-
+#if !NETSTANDARD1_1
         /// <summary>
         /// Base64Encoded image from file.
         /// </summary>
@@ -46,7 +46,7 @@ namespace Mastodot.Utils
                 return DataURIFormat(mime, Convert.ToBase64String(image));
             }
         }
-
+#endif
         private static string GetMime(byte[] image)
         {
             if (image.Take(3).ToArray().Equals(new byte[] { 0xFF, 0xD8, 0xFF }))
