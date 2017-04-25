@@ -50,8 +50,8 @@ namespace Mastodot.Entities
         [JsonProperty("sensitive")]
         public bool? Sensitive { get; set; }
 
-        [JsonProperty("spoier_text")]
-        public string SpoierText { get; set; }
+        [JsonProperty("spoiler_text")]
+        public string SpoilerText { get; set; }
 
         [JsonProperty("visibility")]
         public Visibility Visibility { get; set; }

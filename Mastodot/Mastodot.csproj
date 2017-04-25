@@ -1,8 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Title>Mastodot</Title>
     <TargetFrameworks>netstandard1.1;netstandard1.3</TargetFrameworks>
-    <PackageVersion>1.0.3</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
+    <Authors>yamachu</Authors>
+    <Description>A .NET Mastodon Library</Description>
+    <PackageProjectUrl>https://github.com/yamachu/Mastodot</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
