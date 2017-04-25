@@ -1,92 +1,58 @@
-# Mastodot
+# Mastodot - Mastodon API library for C# (.NET)
 
-Mastodot は C# .NET Standard 1.3 で開発されている Mastodon API にアクセスするためのライブラリです．
-その他に 画像投稿 や 各種トークンの保存，読み込み(予定) の機能も提供しています．
+ [![NuGetBadge](https://img.shields.io/nuget/v/Mastodot.svg)](https://www.nuget.org/packages/Mastodot)
 
-## 使用例
+日本語は[こちら](https://github.com/yamachu/Mastodot/blob/master/README.ja.md)
 
-example ディレクトリに トークンの取得，トゥート，ストリームへの接続 の例を一つのアプリケーションに実装しているためそちらを参照してください．
 
-## 使い方
+## Sample code
 
-### Mastodon Instance へのアプリケーションの登録
+See [example](https://github.com/yamachu/Mastodot/blob/master/example/Program.cs)
 
-Mastodon の API を使用するには ClientID と ClientSecret が必要になるため，その取得を行います． 
+Sample code contains how to generate tokens, toot, and subscribe stream.
 
-本ライブラリでは `ApplicationManager` クラスの `RegistApp` メソッドを通して行います．
+### Regist an app to Mastodon Instance
 
 ```csharp
 
-var registeredApp = await ApplicationManager.RegistApp("Host name", "Your Application Name", Scope.Read | Scope.Write | Scope.Follow);
+var registeredApp = await ApplicationManager.RegistApp("Host name" /* ex: mastodon.cloud */, "Your Application Name", Scope.Read | Scope.Write | Scope.Follow);
 
 ```
 
-ここで得られた `Entities.RegisteredApp` クラスのインスタンスである `registeredApp ` に ClientID や ClientKey などの情報が含まれているため，`MastodonJsonConverter` クラスの `TrySerialize` メソッドなどでシリアライズしたものをファイルに保存するなどを行ってください．
+registeredApp contains ClienID and ClientSecret.
 
-### アクセストークンの取得
-
-アクセストークンの取得には 2種類 方法があり，
-
-* このライブラリを通して登録に使用したメールアドレスとパスワードを使用して取得
-* ブラウザでログインした後特定のURLに飛ぶことで認可し取得
-
-が可能です．
-
-#### メールアドレスを使用
+### Login and get AccessToken
 
 ```csharp
 
+// if login by email
 var tokens = ApplicaionManager.GetAccessTokenByEmail(registeredApp, "Email", "Password");
-// RegisteredApp インスタンスがなくてもトークンを覚えているのであれば以下も可
-var tokens = ApplicationManager.GetAccessTokenByEmail("Host name", "ClientID", "ClientSecret", Scope, "Email", "Password");
 
-```
-
-#### OAuth を使用
-
-```csharp
-
+// if login by use OAuth
 var url = ApplicationManager.GetOAuthUrl(registeredApp);
-// ブラウザなどでこの URL にアクセスし，表示された文字列をコピーするなどして取得
-
+// access this url via browser, HttpClient, ...
 var tokens = await ApplicationManager.GetAccessTokenByCode(registeredApp, "Code that Browser shows");
 
 ```
 
-### アクセストークンを使用した Mastodon API へのアクセス
+tokens contains AccessToken.
+You can access Mastodon API by using this AccessToken.
 
-以上で得られた `Entities.TokenInfo` クラスのインスタンスである `tokens` のメンバの `AccessToken` を使用して Mastodon の API を使用します．
+#### Using Mastodon API
 
-そのためのクライアントは
-
-```csharp
-
-var client = new MastodonClient("Host name", "AccessToken");
-
-```
-
-で生成することが出来ます．
-
-#### Toot してみる
-
-Toot するには `PostNewStatus` メソッドを通して行います．
+This code is how to Toot.
 
 ```csharp
 
+var client = new MastodonClient("Host name (url)", tokens.AccessToken);
 client.PostNewStatus(status: "Hello Mastodon!");
-// 画像つきで行うのであれば
+// With media
 var attachment = await client.UploadMedia("File Path");
 client.PostNewStatus("Look my cuuuuute dog!", mediaIds: new int[]{attachment.Id});
 
 ```
 
-のようにして行うことが可能です．
-
-#### ストリーム API を使う
-
-Mastodon では Twitter の用にタイムラインなどのストリームを扱うことが出来ます．
-
-このストリームを扱う場合は以下のように行います．
+and Using StreamAPI
 
 ```csharp
 
@@ -96,15 +62,10 @@ var publicStream = client.GetObservablePublicTimeline();
 
 ```
 
-`GetObservable{User, Public, Hashtag}Timeline` は `IObservable<IStreamEntity>` を返すので Subscribe して Stream の情報を取得します．
-
-このためストリームを扱う際は `System.Reactive` を使用することをおすすめします(Nuget などで導入してください)．
-`IObserver<IStreamEntity>` を実装したクラスを使用して取得することも可能だと思います．
-
-## ライセンス
+## License
 
 MIT
 
-## その他
+## Other
 
-PR は大歓迎です
+Welcode pull requests!
