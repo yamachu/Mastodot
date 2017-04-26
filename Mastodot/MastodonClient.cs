@@ -317,11 +317,6 @@ namespace Mastodot
         /// <param name="id">Target AccountID</param>
         public Task AuthorizeFollowRequest(int id)
         {
-            var param = new Dictionary<string, object>
-            {
-                {"id", id}
-            }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
-
             return GetClient().Post(string.Format(ApiMethods.AuthorizeFollowRequest, id));
         }
 
@@ -332,11 +327,6 @@ namespace Mastodot
         /// <param name="id">Target AccountID</param>
         public Task RejectFollowRequest(int id)
         {
-            var param = new Dictionary<string, object>
-            {
-                {"id", id}
-            }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
-
             return GetClient().Post(string.Format(ApiMethods.RejectFollowRequest, id));
         }
 
@@ -352,7 +342,7 @@ namespace Mastodot
                 {"uri", fullUserId}
             }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()));
 
-            return GetClient().Post<Account>(ApiMethods.RemoteFollow);
+            return GetClient().Post<Account>(ApiMethods.RemoteFollow, param);
         }
 
         /// <summary>
@@ -461,7 +451,7 @@ namespace Mastodot
         {
             var param = new Dictionary<string, object>
             {
-                {"accountId", accountId},
+                {"account_id", accountId},
                 {"comment", comment}
             }.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()))
             .ToList();
