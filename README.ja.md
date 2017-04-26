@@ -3,7 +3,7 @@
  [![NuGetBadge](https://img.shields.io/nuget/v/Mastodot.svg)](https://www.nuget.org/packages/Mastodot)
 
 
-Mastodot は C# .NET Standard 1.3 で開発されている Mastodon API にアクセスするためのライブラリです．
+Mastodot は C# .NET Standard 1.1 および 1.3 で開発されている Mastodon API にアクセスするためのライブラリです．
 その他に 画像投稿 や 各種トークンの保存，読み込み(予定) の機能も提供しています．
 
 ## 使用例
