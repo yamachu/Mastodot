@@ -93,7 +93,7 @@ Mastodon では Twitter の用にタイムラインなどのストリームを�
 
 ```csharp
 
-var publicStream = client.GetObservablePublicTimeline();
+var publicStream = client.GetObservablePublicTimeline()
                     .OfType<Status>()
                     .Subscribe(x => Console.WriteLine($"{x.Account.FullUserName} Tooted: {x.Content}"));
 
