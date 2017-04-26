@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <Title>Mastodot</Title>
-    <TargetFrameworks>netstandard1.1;netstandard1.3</TargetFrameworks>
+    <!-- When $ dotnet pack -c Release , uncomment out and comment out TargetFramework section -->
+    <!--<TargetFrameworks>netstandard1.1;netstandard1.3</TargetFrameworks>-->
+    <TargetFramework>netstandard1.3</TargetFramework>
     <PackageVersion>1.0.5</PackageVersion>
     <Authors>yamachu</Authors>
     <Description>A .NET Mastodon Library</Description>

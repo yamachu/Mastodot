@@ -99,5 +99,10 @@ namespace Mastodot.Consts
         public static readonly string OAuthAuthorize = "/oauth/authorize";
         public static readonly string OAuthToken = "/oauth/token";
         #endregion
+
+        #region Custom
+        public static readonly string APIBaseUrl = "/api/v1/{0}";
+        public static readonly string StreamBaseUrl = "/api/v1/streaming/{0}";
+        #endregion
     }
 }

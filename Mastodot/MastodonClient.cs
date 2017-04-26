@@ -709,16 +709,10 @@ namespace Mastodot
         /// Gets the observable public timeline as Observable
         /// </summary>
         /// <returns>The observable public timeline.</returns>
-        /// <param name="local">If set to <c>true</c> show this Host only</param>
         /// <param name="host">Stream host URL if stream provide subdomain</param>
-        public IObservable<IStreamEntity> GetObservablePublicTimeline(bool local = false, string host = null)
+        public IObservable<IStreamEntity> GetObservablePublicTimeline(string host = null)
         {
-            var query = new Dictionary<string, object>
-            {
-                {"local", local},
-            }.ToQueryString();
-
-            return GetClient(host).GetObservable(FullUrl(ApiMethods.GetPublicStream, query));
+            return GetClient(host).GetObservable(ApiMethods.GetPublicStream);
         }
 
         /// <summary>
@@ -726,27 +720,63 @@ namespace Mastodot
         /// </summary>
         /// <returns>The observable hashtag timeline.</returns>
         /// <param name="hashtag">Hashtag.</param>
-        /// <param name="local">If set to <c>true</c>  show this Host only</param>
         /// <param name="host">Stream host URL if stream provide subdomain</param>
-        public IObservable<IStreamEntity> GetObservableHashtagTimeline(string hashtag, bool local = false, string host = null)
+        public IObservable<IStreamEntity> GetObservableHashtagTimeline(string hashtag, string host = null)
         {
             var query = new Dictionary<string, object>
             {
                 {"tag", hashtag},
-                {"local", local}
             }.Where(x => !string.IsNullOrWhiteSpace(x.Value.ToString()))
              .Select(x => x.ToUrlFormattedQueryString())
              .Aggregate((x, y) => $"{x}&{y}");
 
             return GetClient(host).GetObservable(FullUrl(ApiMethods.GetPublicStream, query));
         }
+
+        #region UserCustomAPI
+
+        public Task<string> CustomGet(string type, IDictionary<string, object> param = null)
+        {
+            var query = (param as Dictionary<string, object>)?.ToQueryString();
+
+            return GetClient().Get(FullUrl(string.Format(ApiMethods.APIBaseUrl, type), query));
+        }
+
+        public Task<T> CustomGet<T>(string type, IDictionary<string, object> param = null)
+            where T : class
+        {
+            var query = (param as Dictionary<string, object>)?.ToQueryString();
+
+            return GetClient().Get<T>(FullUrl(string.Format(ApiMethods.APIBaseUrl, type), query));
+        }
+
+        public Task<ResponseCollection<T>> CustomCollectionGet<T>(string type, IDictionary<string, object> param = null
+                                                                 , int? maxId = default(int?), int? sinceId = default(int?))
+            where T : IBaseMastodonEntity
+        {
+            var query = ((param as Dictionary<string, object>) ?? (new Dictionary<string, object>()))
+                .AddRangeParameter(maxId, sinceId)
+                .ToQueryString();
+
+            return GetClient().GetCollection<T>(FullUrl(string.Format(ApiMethods.APIBaseUrl, type), query));
+        }
+
+
+        public IObservable<IStreamEntity> GetObservableCustomTimeline(string type, IDictionary<string, object> param = null, string host = null)
+        {
+            var query = (param as Dictionary<string, object>)?.ToQueryString();
+
+            return GetClient(host).GetObservable(FullUrl(string.Format(ApiMethods.StreamBaseUrl, type), query));
+        }
+
+        #endregion
     }
 
     internal static class ParameterFormatUtilExtentions
     {
         public static string ToUrlFormattedQueryString(this KeyValuePair<string, object> kvp)
         {
-            if (kvp.Value == null)
+            if (kvp.Value == null || string.IsNullOrWhiteSpace(kvp.Value.ToString()))
             {
                 return "";
             }
@@ -756,6 +786,11 @@ namespace Mastodot
                 return ((IEnumerable<int>)kvp.Value)
                     .Select(i => $"{kvp.Key}[]={i}")
                     .Aggregate((x, y) => $"{x}&{y}");
+            }
+
+            if (kvp.Value is Boolean)
+            {
+                return $"{kvp.Key}={System.Net.WebUtility.UrlEncode(kvp.Value.ToString().ToLower())}";
             }
 
             return $"{kvp.Key}={System.Net.WebUtility.UrlEncode(kvp.Value.ToString())}";
