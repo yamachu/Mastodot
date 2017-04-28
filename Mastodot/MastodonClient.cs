@@ -347,11 +347,11 @@ namespace Mastodot
 
         /// <summary>
         /// Getting instance information
+        /// Does not require authentication
         /// </summary>
         /// <returns>Current Instance.</returns>
         public Task<Instance> GetInstance()
         {
-            // Does not require authentication
             return GetClient().Get<Instance>(ApiMethods.GetInstance);
         }
 #if !NETSTANDARD1_1
@@ -462,6 +462,7 @@ namespace Mastodot
 
         /// <summary>
         /// Searching for content
+        /// Does not require authentication
         /// </summary>
         /// <returns>The search Results</returns>
         /// <param name="searchQuery">Search query.</param>
@@ -479,6 +480,7 @@ namespace Mastodot
 
         /// <summary>
         /// Fetching a status
+        /// Does not require authentication
         /// </summary>
         /// <returns>The Status</returns>
         /// <param name="id">Target StatusID</param>
@@ -489,6 +491,7 @@ namespace Mastodot
 
         /// <summary>
         /// Getting status context
+        /// Does not require authentication
         /// </summary>
         /// <returns>The staus Context</returns>
         /// <param name="id">Target StatusID</param>
@@ -499,6 +502,7 @@ namespace Mastodot
 
         /// <summary>
         /// Getting a card accociated with a status
+        /// Does not require authentication
         /// </summary>
         /// <returns>The status Card</returns>
         /// <param name="id">Target StatusID</param>
@@ -509,6 +513,7 @@ namespace Mastodot
 
         /// <summary>
         /// Getting who reblogged a status
+        /// Does not require authentication
         /// </summary>
         /// <returns>Accounts who reblogged</returns>
         /// <param name="id">Target StatusID</param>
@@ -531,6 +536,7 @@ namespace Mastodot
 
         /// <summary>
         /// Getting who favourited a status
+        /// Does not require authentication
         /// </summary>
         /// <returns>Accounts who favourited</returns>
         /// <param name="id">Target AccountID</param>
@@ -652,6 +658,7 @@ namespace Mastodot
 
         /// <summary>
         /// Retrieving a timeline
+        /// Does not require authentication
         /// </summary>
         /// <returns>The recent public timeline Status</returns>
         /// <param name="local">If set to <c>true</c> show this Host only</param>
@@ -674,6 +681,7 @@ namespace Mastodot
 
         /// <summary>
         /// Retrieving a timeline
+        /// Does not require authentication
         /// </summary>
         /// <returns>The recent hashtag timeline.</returns>
         /// <param name="hashtag">Hashtag.</param>
