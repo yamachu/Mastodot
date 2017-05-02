@@ -116,14 +116,14 @@ namespace Mastodot.Net
         public async Task<T> Get<T>(string url)
             where T : class
         {
-            var response = await Get(url);
+            var response = await Get(url).ConfigureAwait(false);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
         public async Task<ResponseCollection<T>> GetCollection<T>(string url)
             where T : IBaseMastodonEntity
         {
-            var response = await GetEntirely(url);
+            var response = await GetEntirely(url).ConfigureAwait(false);
             var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             var entity = MastodonJsonConverter.TryDeserialize<IEnumerable<T>>(content);
@@ -143,35 +143,35 @@ namespace Mastodot.Net
         public async Task<T> Post<T>(string url, IEnumerable<KeyValuePair<string, string>> body = null)
             where T : class
         {
-            var response = await Post(url, body);
+            var response = await Post(url, body).ConfigureAwait(false);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 #if !NETSTANDARD1_1
         public async Task<T> PostWithMedia<T>(string url, string fileName)
             where T : class
         {
-            var response = await PostWithMedia(url, fileName);
+            var response = await PostWithMedia(url, fileName).ConfigureAwait(false);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 #endif
         public async Task<T> PostWithMedia<T>(string url, byte[] image)
             where T : class
         {
-            var response = await PostWithMedia(url, image);
+            var response = await PostWithMedia(url, image).ConfigureAwait(false);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
         public async Task<T> Patch<T>(string url, IEnumerable<KeyValuePair<string, string>> body = null)
             where T : class
         {
-            var response = await Patch(url, body);
+            var response = await Patch(url, body).ConfigureAwait(false);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
         public async Task<T> Delete<T>(string url)
             where T : class
         {
-            var response = await Delete(url);
+            var response = await Delete(url).ConfigureAwait(false);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
