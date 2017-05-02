@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Mastodot.Entities;
+using Mastodot.Exceptions;
 using Mastodot.Utils.JsonConverters;
 using Newtonsoft.Json;
 
@@ -10,12 +11,25 @@ namespace Mastodot.Utils
     {
         public static T TryDeserialize<T>(string body)
         {
-            var deserialized = JsonConvert.DeserializeObject<T>(body, new ErrorThrowJsonConverter<T>());
-            if (deserialized is IBaseMastodonEntity)
+            try
             {
-                ((IBaseMastodonEntity)deserialized).RawJson = body;
+                var deserialized = JsonConvert.DeserializeObject<T>(body, new ErrorThrowJsonConverter<T>());
+                if (deserialized is IBaseMastodonEntity)
+                {
+                    ((IBaseMastodonEntity)deserialized).RawJson = body;
+                }
+                return deserialized;
             }
-            return deserialized;
+            catch (JsonReaderException readerException)
+            {
+                var error = new Error
+                {
+                    RawJson = "Cannot read original JSON"
+                };
+                var exception = new DeserializeErrorException($"Invalid Json Format", readerException);
+                exception.Error = error;
+                throw exception;
+            }
         }
 
         public static string TrySerialize<T>(T obj)

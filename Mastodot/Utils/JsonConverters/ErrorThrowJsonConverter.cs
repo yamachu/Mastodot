@@ -17,14 +17,14 @@ namespace Mastodot.Utils.JsonConverters
         {
             if (objectType.Name.StartsWith("IEnumerable"))
             {
-                JArray jArray = JArray.Load(reader);
+                var jArray = JArray.Load(reader);
                 return jArray.ToObject<T>();
             }
 
-            JObject jObject = JObject.Load(reader);
+            var jObject = JObject.Load(reader);
             if (jObject["error"] != null)
             {
-                Error error = jObject.ToObject<Error>();
+                var error = jObject.ToObject<Error>();
                 error.RawJson = jObject.ToString();
                 var exception = new DeserializeErrorException($"Cant deserialize response, Type {objectType}")
                 {

@@ -12,5 +12,10 @@ namespace Mastodot.Exceptions
             : base(message)
         {
         }
+
+        public DeserializeErrorException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
     }
 }
