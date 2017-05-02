@@ -30,8 +30,8 @@ namespace Mastodot.Net
                 BaseAddress = Host
             };
 
-            var response = await client.GetAsync(url);
-            return await response.Content.ReadAsStringAsync();
+            var response = await client.GetAsync(url).ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         private async Task<HttpResponseMessage> GetEntirely(string url)
@@ -41,7 +41,7 @@ namespace Mastodot.Net
                 BaseAddress = Host
             };
 
-            return await client.GetAsync(url);
+            return await client.GetAsync(url).ConfigureAwait(false);
         }
 
         public async Task<string> Post(string url, IEnumerable<KeyValuePair<string, string>> body = null)
@@ -53,8 +53,8 @@ namespace Mastodot.Net
 
             var content = new FormUrlEncodedContent(body ?? Enumerable.Empty<KeyValuePair<string, string>>());
 
-            var response = await client.PostAsync(url, content);
-            return await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content).ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 #if !NETSTANDARD1_1
         public async Task<string> PostWithMedia(string url, string filePath)
@@ -67,8 +67,8 @@ namespace Mastodot.Net
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(File.OpenRead(filePath)), "file", "file");
 
-            var response = await client.PostAsync(url, content);
-            return await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content).ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 #endif
         public async Task<string> PostWithMedia(string url, byte[] image)
@@ -81,8 +81,8 @@ namespace Mastodot.Net
             var content = new MultipartFormDataContent();
             content.Add(new ByteArrayContent(image), "file", "file");
 
-            var response = await client.PostAsync(url, content);
-            return await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content).ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         public async Task<string> Patch(string url, IEnumerable<KeyValuePair<string, string>> body = null)
@@ -97,8 +97,8 @@ namespace Mastodot.Net
             var content = new FormUrlEncodedContent(body ?? Enumerable.Empty<KeyValuePair<string, string>>());
             message.Content = content;
 
-            var response = await client.SendAsync(message);
-            return await response.Content.ReadAsStringAsync();
+            var response = await client.SendAsync(message).ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         // Currently this method used /api/v1/statuses/:id only, and return empty
@@ -109,8 +109,8 @@ namespace Mastodot.Net
                 BaseAddress = Host
             };
 
-            var response = await client.DeleteAsync(url);
-            return await response.Content.ReadAsStringAsync();
+            var response = await client.DeleteAsync(url).ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         public async Task<T> Get<T>(string url)
@@ -124,7 +124,7 @@ namespace Mastodot.Net
             where T : IBaseMastodonEntity
         {
             var response = await GetEntirely(url);
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             var entity = MastodonJsonConverter.TryDeserialize<IEnumerable<T>>(content);
             var result = new ResponseCollection<T>(entity);
