@@ -171,7 +171,7 @@ namespace Mastodot.Net
         public async Task<T> Delete<T>(string url)
             where T : class
         {
-            var response = await Get(url);
+            var response = await Delete(url);
             return MastodonJsonConverter.TryDeserialize<T>(response);
         }
 
