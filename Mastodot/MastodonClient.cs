@@ -240,15 +240,13 @@ namespace Mastodot
         /// <param name="maxId">MaxID</param>
         /// <param name="sinceId">SinceID</param>
         public Task<ResponseCollection<Account>> SearchAccount(string searchQuery
-                                                        , int limit = 40
-                                                        , int? maxId = default(int?), int? sinceId = default(int?))
+                                                        , int limit = 40)
         {
             var query = new Dictionary<string, object>
             {
                 {"q", searchQuery},
                 {"limit", limit}
-            }.AddRangeParameter(maxId, sinceId)
-             .ToQueryString();
+            }.ToQueryString();
 
             return GetClient().GetCollection<Account>(FullUrl(ApiMethods.SearchForAccounts, query));
         }

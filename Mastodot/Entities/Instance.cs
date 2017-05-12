@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace Mastodot.Entities
@@ -16,5 +17,10 @@ namespace Mastodot.Entities
 
         [JsonProperty("email")]
         public string Email { get; set; }
+
+        // version over 1.3
+        [JsonProperty("version", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue(null)]
+        public string Version { get; set; }
     }
 }
