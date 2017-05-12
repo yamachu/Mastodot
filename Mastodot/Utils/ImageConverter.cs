@@ -35,7 +35,7 @@ namespace Mastodot.Utils
             using (var fs = new FileStream(filePath, FileMode.Open))
             {
                 var image = new byte[fs.Length];
-                await fs.ReadAsync(image, 0, (int)fs.Length);
+                await fs.ReadAsync(image, 0, (int)fs.Length).ConfigureAwait(false);
 
                 var mime = GetMime(image);
                 if (mime == "")

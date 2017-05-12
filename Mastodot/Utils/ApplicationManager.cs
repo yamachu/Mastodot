@@ -42,8 +42,8 @@ namespace Mastodot.Utils
             var url = $"https://{appsSubdomain}{host}{ApiMethods.RegistApp}";
 
             var client = new HttpClient();
-            var response = await client.PostAsync(url, content);
-            var responseBody = await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content).ConfigureAwait(false);
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             var registerdApp = MastodonJsonConverter.TryDeserialize<RegisteredApp>(responseBody);
             registerdApp.Host = host;
@@ -120,8 +120,8 @@ namespace Mastodot.Utils
             var url = $"https://{oauthSubdomain}{host}{ApiMethods.OAuthToken}";
 
             var client = new HttpClient();
-            var response = await client.PostAsync(url, content);
-            var responseBody = await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content).ConfigureAwait(false);
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return MastodonJsonConverter.TryDeserialize<TokenInfo>(responseBody);
         }
@@ -167,8 +167,8 @@ namespace Mastodot.Utils
             var url = $"https://{oauthSubdomain}{host}{ApiMethods.OAuthToken}";
 
             var client = new HttpClient();
-            var response = await client.PostAsync(url, content);
-            var responseBody = await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(url, content).ConfigureAwait(false);
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return MastodonJsonConverter.TryDeserialize<TokenInfo>(responseBody);
         }
