@@ -3,17 +3,17 @@
   <PropertyGroup>
     <Title>Mastodot</Title>
     <!-- When $ dotnet pack -c Release , uncomment out and comment out TargetFramework section -->
-    <!--<TargetFrameworks>netstandard1.1;netstandard1.3;net45;net46</TargetFrameworks>-->
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFrameworks>netstandard1.1;netstandard1.3;net45;net46</TargetFrameworks>
+    <!--<TargetFramework>netstandard1.3</TargetFramework>-->
     <Authors>yamachu</Authors>
     <Description>A .NET Mastodon Library</Description>
     <PackageId>Mastodot</PackageId>
-    <PackageVersion>1.1.1-Pre</PackageVersion>
+    <PackageVersion>1.1.2</PackageVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>Mastodon</PackageTags>
     <PackageProjectUrl>https://github.com/yamachu/Mastodot</PackageProjectUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.1.1-Pre</Version>
+    <Version>1.1.2</Version>
     <RepositoryUrl>https://github.com/yamachu/Mastodot</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes></PackageReleaseNotes>
