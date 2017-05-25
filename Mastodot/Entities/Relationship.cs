@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace Mastodot.Entities
@@ -19,6 +20,10 @@ namespace Mastodot.Entities
 
         [JsonProperty("muting")]
         public bool Muting { get; set; }
+
+        [JsonProperty("muting_boosts", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue(false)]
+        public bool MutingBoosts { get; set; }
 
         [JsonProperty("requested")]
         public bool Requested { get; set; }
