@@ -450,6 +450,16 @@ namespace Mastodot
         }
 
         /// <summary>
+        /// Delete a single notification
+        /// </summary>
+        /// <returns>None</returns>
+        /// <param name="id">Target Notification ID</param>
+        public Task DismissNotifications(int id)
+        {
+            return GetClient().Post(string.Format(ApiMethods.DismissNotifications, id));
+        }
+
+        /// <summary>
         /// Fetching a user's reports
         /// </summary>
         /// <returns>The Reports that current user made</returns>
