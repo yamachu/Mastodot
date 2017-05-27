@@ -16,6 +16,8 @@ namespace Mastodot.Consts
         public static readonly string Unblock = "/api/v1/accounts/{0}/unblock";
         public static readonly string Mute = "/api/v1/accounts/{0}/mute";
         public static readonly string Unmute = "/api/v1/accounts/{0}/unmute";
+        public static readonly string MuteBoosts = "/api/v1/accounts/{0}/mute_boosts";
+        public static readonly string UnmuteBoosts = "/api/v1/accounts/{0}/unmute_boosts";
         public static readonly string GetRelationships = "/api/v1/accounts/relationships";
         public static readonly string SearchForAccounts = "/api/v1/accounts/search";
         #endregion

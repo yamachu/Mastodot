@@ -217,6 +217,26 @@ namespace Mastodot
         }
 
         /// <summary>
+        /// Muting an account
+        /// </summary>
+        /// <returns>The target account's Relationship</returns>
+        /// <param name="id">Target AccountID</param>
+        public Task<Relationship> MuteBoosts(int id)
+        {
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.MuteBoosts, id));
+        }
+
+        /// <summary>
+        /// Unmuting an acocunt
+        /// </summary>
+        /// <returns>The target account's Relationship</returns>
+        /// <param name="id">Target AccountID</param>
+        public Task<Relationship> UnmuteBoosts(int id)
+        {
+            return GetClient().Post<Relationship>(string.Format(ApiMethods.UnmuteBoosts, id));
+        }
+
+        /// <summary>
         /// Getting an account's relationships
         /// </summary>
         /// <returns>The relationships that given ID</returns>
