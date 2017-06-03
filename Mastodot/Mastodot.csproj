@@ -8,12 +8,12 @@
     <Authors>yamachu</Authors>
     <Description>A .NET Mastodon Library</Description>
     <PackageId>Mastodot</PackageId>
-    <PackageVersion>1.1.2</PackageVersion>
+    <PackageVersion>1.1.3-Pre</PackageVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>Mastodon</PackageTags>
     <PackageProjectUrl>https://github.com/yamachu/Mastodot</PackageProjectUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.1.2</Version>
+    <Version>1.1.3-Pre</Version>
     <RepositoryUrl>https://github.com/yamachu/Mastodot</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes></PackageReleaseNotes>
