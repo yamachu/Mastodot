@@ -32,11 +32,11 @@ namespace example
 
         private void CreateAppAndAuth(string host = "mastodon.cloud", string appName = "MastodotSampleClient")
         {
-            var app = ApplicaionManager.RegistApp(host, appName, Scope.Read | Scope.Write | Scope.Follow).Result;
-            var url = ApplicaionManager.GetOAuthUrl(app);
+            var app = ApplicationManager.RegistApp(host, appName, Scope.Read | Scope.Write | Scope.Follow).Result;
+            var url = ApplicationManager.GetOAuthUrl(app);
             Console.WriteLine(url);
             var code = Console.ReadLine();
-            var tokens = ApplicaionManager.GetAccessTokenByCode(app, code).Result;
+            var tokens = ApplicationManager.GetAccessTokenByCode(app, code).Result;
             Console.WriteLine(tokens.AccessToken);
             Console.ReadKey();
             Console.WriteLine("Finish");
