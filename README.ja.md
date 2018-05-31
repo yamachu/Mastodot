@@ -14,7 +14,7 @@ Mastodot は C# .NET Standard 1.1 および 1.3 で開発されている Mastodo
 
 ### Mastodon Instance へのアプリケーションの登録
 
-Mastodon の API を使用するには ClientID と ClientSecret が必要になるため，その取得を行います． 
+Mastodon の API を使用するには ClientID と ClientSecret が必要になるため，その取得を行います．
 
 本ライブラリでは `ApplicationManager` クラスの `RegistApp` メソッドを通して行います．
 
@@ -39,7 +39,7 @@ var registeredApp = await ApplicationManager.RegistApp("Host name", "Your Applic
 
 ```csharp
 
-var tokens = ApplicaionManager.GetAccessTokenByEmail(registeredApp, "Email", "Password");
+var tokens = ApplicationManager.GetAccessTokenByEmail(registeredApp, "Email", "Password");
 // RegisteredApp インスタンスがなくてもトークンを覚えているのであれば以下も可
 var tokens = ApplicationManager.GetAccessTokenByEmail("Host name", "ClientID", "ClientSecret", Scope, "Email", "Password");
 

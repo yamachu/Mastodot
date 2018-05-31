@@ -26,7 +26,7 @@ registeredApp contains ClienID and ClientSecret.
 ```csharp
 
 // if login by email
-var tokens = ApplicaionManager.GetAccessTokenByEmail(registeredApp, "Email", "Password");
+var tokens = ApplicationManager.GetAccessTokenByEmail(registeredApp, "Email", "Password");
 
 // if login by use OAuth
 var url = ApplicationManager.GetOAuthUrl(registeredApp);
@@ -157,6 +157,6 @@ Welcode pull requests!
 
 For support multi target frameworks, `Mastodot.csproj` is not supported format.
 
-When edit and debug this library, replace `<TargetFrameworks>netstandard1.1;netstandard1.3</TargetFrameworks>` to `<TargetFramework>netstandard1.1</TargetFramework>` or 
+When edit and debug this library, replace `<TargetFrameworks>netstandard1.1;netstandard1.3</TargetFrameworks>` to `<TargetFramework>netstandard1.1</TargetFramework>` or
 `<TargetFramework>netstandard1.1</TargetFramework>`
 
