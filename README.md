@@ -152,11 +152,3 @@ MIT
 ## Other
 
 Welcode pull requests!
-
-## For developer
-
-For support multi target frameworks, `Mastodot.csproj` is not supported format.
-
-When edit and debug this library, replace `<TargetFrameworks>netstandard1.1;netstandard1.3</TargetFrameworks>` to `<TargetFramework>netstandard1.1</TargetFramework>` or
-`<TargetFramework>netstandard1.1</TargetFramework>`
-
