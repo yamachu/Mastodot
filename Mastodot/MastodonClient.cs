@@ -372,7 +372,7 @@ namespace Mastodot
         {
             return GetClient().Get<Instance>(ApiMethods.GetInstance);
         }
-#if !NETSTANDARD1_1
+
         /// <summary>
         /// Uploading a media attachment
         /// </summary>
@@ -382,7 +382,7 @@ namespace Mastodot
         {
             return GetClient().PostWithMedia<Attachment>(ApiMethods.UploadMedia, filePath);
         }
-#endif
+
         /// <summary>
         /// Uploading a media attachment
         /// </summary>
