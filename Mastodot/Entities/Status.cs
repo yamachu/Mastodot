@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Mastodot.Enums;
 using Newtonsoft.Json;
 
@@ -67,5 +68,9 @@ namespace Mastodot.Entities
 
         [JsonProperty("application")]
         public Application Application { get; set; }
+
+        [JsonProperty("language", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue("en")]
+        public string Language { get; set; }
     }
 }

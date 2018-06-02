@@ -18,9 +18,7 @@ namespace Mastodot.Entities
         [JsonProperty("email")]
         public string Email { get; set; }
 
-        // version over 1.3
-        [JsonProperty("version", DefaultValueHandling = DefaultValueHandling.Populate)]
-        [DefaultValue(null)]
+        [JsonProperty("version")]
         public string Version { get; set; }
     }
 }
