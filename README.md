@@ -48,7 +48,7 @@ var client = new MastodonClient("Host name (url)", tokens.AccessToken);
 client.PostNewStatus(status: "Hello Mastodon!");
 // With media
 var attachment = await client.UploadMedia("File Path");
-client.PostNewStatus("Look my cuuuuute dog!", mediaIds: new int[]{attachment.Id});
+client.PostNewStatus("Look my cuuuuute dog!", mediaIds: new long[]{attachment.Id});
 
 ```
 
