@@ -7,7 +7,7 @@ namespace Mastodot.Entities
     public class Attachment : BaseMastodonEntity
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("type")]
         public AttachmentType Type { get; set; }

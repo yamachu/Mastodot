@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Mastodot.Consts;
 using Mastodot.Entities;
 using Mastodot.Enums;
+using System.Net;
 
 namespace Mastodot.Utils
 {
@@ -24,6 +25,10 @@ namespace Mastodot.Utils
         /// <param name="subdomain">If Auth request do in Instance's subdomain, set this param</param>
         public static async Task<RegisteredApp> RegistApp(string host, string clientName, Scope scope, string redirectUri = null, string website = null, string subdomain = null)
         {
+#if !NETSTANDARD1_3
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+#endif
             var param = new Dictionary<string, string>
             {
                 {"client_name", clientName},
